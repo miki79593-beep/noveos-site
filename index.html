@@ -10,8 +10,19 @@
 <body>
 <header class="nav"><div class="wrap">
   <a class="brand" href="/">NOVE<span>∞</span></a>
-  <nav><a href="#service">サービス</a><a href="#flow">進め方</a><a href="#price">料金</a><a href="#company">事業者情報</a><a href="#contact">お問い合わせ</a></nav>
-</div></header>
+  <button class="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+</div>
+<nav id="menu" hidden><a href="#service">サービス</a><a href="#flow">進め方</a><a href="#price">料金</a><a href="#company">事業者情報</a><a href="#contact">お問い合わせ</a></nav>
+</header>
+<script>
+(function(){
+  var btn = document.querySelector('.menu-btn'), menu = document.getElementById('menu');
+  function set(open){ menu.hidden = !open; btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  btn.addEventListener('click', function(){ set(menu.hidden); });
+  menu.addEventListener('click', function(e){ if (e.target.tagName === 'A') set(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') set(false); });
+})();
+</script>
 
 <div class="hero">
   <div id="tower" aria-hidden="true"></div>

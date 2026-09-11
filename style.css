@@ -7,8 +7,14 @@ header.nav{position:sticky;top:0;z-index:10;background:rgba(5,5,5,.85);backdrop-
 header.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px;flex-wrap:wrap}
 .brand{font-weight:800;letter-spacing:.12em;color:var(--fg);text-decoration:none;font-size:1.15rem}
 .brand span{color:var(--gold)}
-nav a{color:var(--mute);text-decoration:none;margin-left:16px;font-size:.9rem}
-nav a:hover{color:var(--fg)}
+.menu-btn{background:none;border:1px solid var(--line);border-radius:8px;width:44px;height:40px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;padding:0}
+.menu-btn span{display:block;width:20px;height:2px;background:var(--fg);transition:transform .2s,opacity .2s}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#menu{position:absolute;top:100%;left:0;right:0;background:rgba(5,5,5,.97);border-bottom:1px solid var(--line);display:flex;flex-direction:column}
+#menu a{color:var(--fg);text-decoration:none;padding:14px 20px;border-top:1px solid var(--line);max-width:960px;width:100%;margin:0 auto}
+#menu a:hover{color:var(--gold)}
 .hero{position:relative;display:flex;flex-direction:column;align-items:center;overflow:hidden;border-bottom:1px solid var(--line);padding-block:0 7vh}
 #tower{position:relative;width:100%;height:clamp(320px,62vh,640px)}
 .hero .copy{position:relative;text-align:center;padding-block:0;pointer-events:none}
@@ -34,4 +40,4 @@ footer a{color:var(--mute);margin-right:16px}
 .doc{padding-block:48px}
 .doc h1{font-size:1.6rem}
 .doc h2{font-size:1.15rem;margin-top:32px}
-@media (max-width:600px){nav a{margin-left:10px}table.info th{width:40%}}
+@media (max-width:600px){table.info th{width:40%}}
