@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOVE∞ | Linux 実測最適化サービス</title>
+<meta name="description" content="NOVE∞ は、Linux サーバー・PC の性能を実測で点検し、改善前後の数値をレポートでお渡しする最適化サービスです。">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <a class="brand" href="/">NOVE<span>∞</span></a>
+  <nav><a href="#service">サービス</a><a href="#flow">進め方</a><a href="#price">料金</a><a href="#company">事業者情報</a><a href="#contact">お問い合わせ</a></nav>
+</div></header>
+
+<div class="hero">
+  <div id="tower" aria-hidden="true"></div>
+  <div class="wrap copy">
+    <h1>NOVE<span>∞</span></h1>
+    <p>測って、直して、数字で示す。<br>Linux 実測最適化サービス</p>
+  </div>
+</div>
+
+<main>
+<section id="service"><div class="wrap">
+  <h2>サービス内容</h2>
+  <p>お客様の Linux サーバー・PC を実測で点検し、性能を落としている原因を特定して改善します。改善の前後を同じ条件で測り、その数値をレポートでお渡しします。</p>
+  <div class="grid">
+    <div class="card"><h3>実測による点検</h3><p>CPU周波数・温度・メモリ・ディスク・ネットワークを標準的な計測ツールで測り、設定ミスや詰まりを特定します。</p></div>
+    <div class="card"><h3>標準ツールを優先</h3><p>既存の実績あるオープンソース（tuned・earlyoom など）で解決できるものは、それを使って設定します。独自ツールの押し売りはしません。</p></div>
+    <div class="card"><h3>前後比較レポート</h3><p>同じ機械・同じ条件で複数回測定し、改善率を % で記載します。改善しなかった項目は 0% とそのまま記載します。</p></div>
+  </div>
+</div></section>
+
+<section id="flow"><div class="wrap">
+  <h2>進め方</h2>
+  <div class="tbl"><table class="info">
+    <tr><th>1. ご相談</th><td>メールで対象機器の台数・用途・お困りの症状をお知らせください。</td></tr>
+    <tr><th>2. お見積り・ご契約</th><td>作業範囲と納期を書面でご提示し、ご同意いただいてから着手します。</td></tr>
+    <tr><th>3. 計測・改善</th><td>改善前の計測 → 原因の特定 → 設定変更 → 改善後の計測を行います。</td></tr>
+    <tr><th>4. 報告</th><td>前後の数値・変更内容・元に戻す手順をまとめたレポートを納品します。</td></tr>
+  </table></div>
+</div></section>
+
+<section id="price"><div class="wrap">
+  <h2>料金</h2>
+  <div class="card">
+    <div class="price">2,100,000円<span class="note">（税込）</span></div>
+    <p>【要確認】作業範囲（対象台数・期間・サポート有無）はここに記載します。</p>
+    <p class="note">お支払い方法：クレジットカード（Stripe）または銀行振込。<br>性能改善の幅は機器と環境によって異なり、改善余地が見つからない場合もあります。事前のご相談で改善の見込みが低いと判断した場合は、ご契約をお勧めしません。</p>
+  </div>
+</div></section>
+
+<section id="company"><div class="wrap">
+  <h2>事業者情報</h2>
+  <div class="tbl"><table class="info">
+    <tr><th>サービス名</th><td>NOVE∞</td></tr>
+    <tr><th>事業者</th><td>川口 裕治朗（個人事業）</td></tr>
+    <tr><th>事業内容</th><td>Linux サーバー・PC の実測点検および性能最適化</td></tr>
+    <tr><th>連絡先</th><td><a href="mailto:mymikiyuuzi@pm.me">mymikiyuuzi@pm.me</a></td></tr>
+  </table></div>
+  <p class="note"><a href="tokushoho.html">特定商取引法に基づく表記</a></p>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <h2>お問い合わせ</h2>
+  <p>ご相談・お見積りのご依頼はメールでお送りください。</p>
+  <a class="btn" href="mailto:mymikiyuuzi@pm.me?subject=NOVE%E2%88%9E%20%E3%81%94%E7%9B%B8%E8%AB%87">メールで問い合わせる</a>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <a href="tokushoho.html">特定商取引法に基づく表記</a><a href="terms.html">利用規約</a><a href="privacy.html">プライバシーポリシー</a>
+  <p>© 2026 NOVE∞</p>
+</div></footer>
+
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js" defer></script>
+<script>
+// 旧トップページ(2026-05版)の回転タワーを同じ形・配色・回転速度で再現
+(function(){
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function initTower(){
+    if (!window.Plotly) { console.warn('Plotly unavailable — tower skipped'); return; }
+    var size = 35, x = [], y = [], z = [];
+    for (var i = 0; i < size; i++) { x[i] = i - size/2; y[i] = i - size/2; z[i] = []; }
+    for (var i = 0; i < size; i++) for (var j = 0; j < size; j++) {
+      var v = (size/2) - Math.max(Math.abs(x[i]), Math.abs(y[j]));
+      z[i][j] = v > 0 ? Math.pow(v, 1.3) * 1.8 : 0;
+    }
+    Plotly.newPlot('tower', [{
+      x:x, y:y, z:z, type:'surface',
+      colorscale:[[0,'#050505'],[0.3,'#4b0082'],[0.7,'#00d2ff'],[1,'#ffaa00']],
+      showscale:false, opacity:0.85, hoverinfo:'skip',
+      contours:{z:{show:true, color:'#ffaa00', width:1, project:{z:true}}}
+    }], {
+      paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)', margin:{l:0,r:0,b:0,t:0},
+      scene:{ xaxis:{visible:false}, yaxis:{visible:false}, zaxis:{visible:false},
+              camera:{ eye:{x:1.8, y:1.8, z:1.5}, center:{x:0, y:0, z:-0.1} } }
+    }, {responsive:true, displayModeBar:false, staticPlot:false});
+    var angle = 0, rafId = null;
+    function rotate(){
+      angle = (angle + 0.003) % (Math.PI * 2);
+      Plotly.relayout('tower', {'scene.camera.eye':{
+        x:1.8*Math.cos(angle), y:1.8*Math.sin(angle), z:1.5 + 0.3*Math.sin(angle*0.4)}});
+      rafId = requestAnimationFrame(rotate);
+    }
+    function start(){ if (rafId === null && !document.hidden && !reduceMotion) rafId = requestAnimationFrame(rotate); }
+    function stop(){ if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
+    document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
+    start();
+  }
+  window.addEventListener('load', initTower);
+})();
+</script>
+</body>
+</html>
