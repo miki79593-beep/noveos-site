@@ -36,6 +36,29 @@ table.info th{width:32%;color:var(--mute);font-weight:500}
 .tbl{overflow-x:auto}
 .btn{display:inline-block;padding:12px 22px;border:1px solid var(--gold);color:var(--gold);border-radius:8px;text-decoration:none;font-weight:700}
 .btn:hover{background:var(--gold);color:#000}
+button.btn{background:none;font:inherit;font-weight:700;cursor:pointer}
+button.btn:disabled{opacity:.5;cursor:wait}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px;margin-top:24px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:.92rem;font-weight:600}
+.req,.opt{display:inline-block;font-size:.7rem;font-weight:700;padding:1px 7px;border-radius:4px;margin-left:8px;vertical-align:2px}
+.req{background:var(--gold);color:#000}
+.opt{border:1px solid var(--line);color:var(--mute)}
+.form input,.form select,.form textarea{width:100%;background:#07070f;color:var(--fg);border:1px solid #33334d;border-radius:8px;padding:11px 12px;font:inherit;font-size:1rem}
+.form textarea{resize:vertical;min-height:150px}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,210,255,.18)}
+.form.tried :invalid{border-color:#ff5c7a}
+.form ::placeholder{color:#5c5c78}
+.count{font-size:.8rem;color:var(--mute);text-align:right}
+.check{display:flex;gap:10px;align-items:flex-start;font-weight:400!important}
+.check input{width:18px;height:18px;margin-top:5px;accent-color:var(--gold)}
+.form.tried .check input:invalid{outline:2px solid #ff5c7a}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.status{margin:12px 0 0;font-weight:600;min-height:1.2em}
+.status.ok{color:#5be3a1}
+.status.err{color:#ff7a90}
+@media (max-width:640px){.form{grid-template-columns:1fr;padding:18px}}
 footer{padding-block:32px;color:var(--mute);font-size:.85rem}
 footer a{color:var(--mute);margin-right:16px}
 .doc{padding-block:48px}

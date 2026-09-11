@@ -75,9 +75,102 @@
 
 <section id="contact"><div class="wrap">
   <h2>お問い合わせ</h2>
-  <p>ご相談・お見積りのご依頼はメールでお送りください。</p>
-  <a class="btn" href="mailto:mymikiyuuzi@pm.me?subject=NOVE%E2%88%9E%20%E3%81%94%E7%9B%B8%E8%AB%87">メールで問い合わせる</a>
+  <p>ご相談・お見積りのご依頼は、以下のフォームからお送りください。<span class="req">必須</span>の項目は入力が必要です。</p>
+  <form id="contact-form" class="form" novalidate>
+    <div class="field full">
+      <label for="f-type">お問い合わせ種別<span class="req">必須</span></label>
+      <select id="f-type" name="type" required>
+        <option value="">選択してください</option>
+        <option>点検・最適化のご相談</option>
+        <option>お見積りのご依頼</option>
+        <option>その他のお問い合わせ</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-company">会社名・団体名<span class="opt">任意</span></label>
+      <input id="f-company" name="company" autocomplete="organization" maxlength="100">
+    </div>
+    <div class="field">
+      <label for="f-name">お名前<span class="req">必須</span></label>
+      <input id="f-name" name="name" autocomplete="name" required maxlength="60">
+    </div>
+    <div class="field">
+      <label for="f-email">メールアドレス<span class="req">必須</span></label>
+      <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="254">
+    </div>
+    <div class="field">
+      <label for="f-tel">電話番号<span class="opt">任意</span></label>
+      <input id="f-tel" name="tel" type="tel" autocomplete="tel" maxlength="20" pattern="[0-9+\-() ]{10,20}">
+    </div>
+    <div class="field">
+      <label for="f-units">対象機器の台数<span class="opt">任意</span></label>
+      <select id="f-units" name="units">
+        <option value="">選択してください</option>
+        <option>1台</option><option>2〜5台</option><option>6〜20台</option><option>21台以上</option><option>未定</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-os">OS・ディストリビューション<span class="opt">任意</span></label>
+      <input id="f-os" name="os" maxlength="100" placeholder="例：Rocky Linux 9／Ubuntu 24.04">
+    </div>
+    <div class="field full">
+      <label for="f-body">ご相談内容<span class="req">必須</span></label>
+      <textarea id="f-body" name="body" rows="7" required minlength="10" maxlength="2000" placeholder="お困りの症状、用途、ご希望の時期などをご記入ください。"></textarea>
+      <div class="count"><span id="f-count">0</span> / 2000</div>
+    </div>
+    <div class="hp" aria-hidden="true"><label>空欄のままにしてください<input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <div class="field full">
+      <label class="check"><input id="f-agree" type="checkbox" required> <span><a href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>に同意します<span class="req">必須</span></span></label>
+    </div>
+    <div class="field full">
+      <button class="btn" type="submit">送信する</button>
+      <p id="f-status" class="status" role="status" aria-live="polite"></p>
+      <p class="note" id="f-mode-note">「送信する」を押すと、入力内容を記載したメールがお使いのメールソフトで開きます。内容をご確認のうえ、そのまま送信してください。</p>
+    </div>
+  </form>
 </div></section>
+<script>
+(function(){
+  // 送信先サービス(Formspree等)のURLを設定すると、ページ上で送信が完了する方式に切り替わる。空ならメールソフト方式。
+  var FORM_ENDPOINT = '';
+  var TO = 'mymikiyuuzi@pm.me';
+  var f = document.getElementById('contact-form'), st = document.getElementById('f-status');
+  var body = document.getElementById('f-body'), cnt = document.getElementById('f-count');
+  if (FORM_ENDPOINT) document.getElementById('f-mode-note').hidden = true;
+  body.addEventListener('input', function(){ cnt.textContent = body.value.length; });
+  function val(n){ var e = f.elements[n]; return e ? e.value.trim() : ''; }
+  f.addEventListener('submit', async function(e){
+    e.preventDefault();
+    st.className = 'status';
+    if (val('website')) return; // 自動投稿(スパム)は黙って捨てる
+    f.classList.add('tried');
+    if (!f.checkValidity()) {
+      var bad = f.querySelector(':invalid'); if (bad) bad.focus();
+      st.textContent = '未入力または形式の正しくない項目があります。赤枠の項目をご確認ください。';
+      st.classList.add('err'); return;
+    }
+    var rows = [['お問い合わせ種別','type'],['会社名・団体名','company'],['お名前','name'],['メールアドレス','email'],
+                ['電話番号','tel'],['対象機器の台数','units'],['OS・ディストリビューション','os']];
+    var text = rows.map(function(r){ return r[0] + '：' + (val(r[1]) || '（未記入）'); }).join('\n') + '\n\n【ご相談内容】\n' + val('body');
+    var subject = '[NOVE∞] ' + val('type') + '（' + (val('company') || val('name')) + '様）';
+    if (!FORM_ENDPOINT) {
+      location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+      st.textContent = 'メールソフトを起動しました。開かない場合は ' + TO + ' 宛てに直接お送りください。';
+      st.classList.add('ok'); return;
+    }
+    var btn = f.querySelector('button[type=submit]'); btn.disabled = true; st.textContent = '送信しています…';
+    try {
+      var r = await fetch(FORM_ENDPOINT, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'},
+        body: JSON.stringify({_subject: subject, email: val('email'), message: text})});
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      f.reset(); f.classList.remove('tried'); cnt.textContent = '0';
+      st.textContent = '送信しました。ご入力のメールアドレス宛てにご連絡いたします。'; st.classList.add('ok');
+    } catch (err) {
+      st.textContent = '送信できませんでした。お手数ですが ' + TO + ' 宛てに直接お送りください。'; st.classList.add('err');
+    } finally { btn.disabled = false; }
+  });
+})();
+</script>
 </main>
 
 <footer><div class="wrap">
