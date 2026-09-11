@@ -78,7 +78,6 @@
 <script>
 // 旧トップページ(2026-05版)の回転タワーを同じ形・配色・回転速度で再現
 (function(){
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   function initTower(){
     if (!window.Plotly) { console.warn('Plotly unavailable — tower skipped'); return; }
     var size = 35, x = [], y = [], z = [];
@@ -104,7 +103,8 @@
         x:1.8*Math.cos(angle), y:1.8*Math.sin(angle), z:1.5 + 0.3*Math.sin(angle*0.4)}});
       rafId = requestAnimationFrame(rotate);
     }
-    function start(){ if (rafId === null && !document.hidden && !reduceMotion) rafId = requestAnimationFrame(rotate); }
+    // 裕治朗様の指定(2026-09-11)で「動きを減らす」設定の端末でも回す。非表示タブでは止める(電池節約)
+    function start(){ if (rafId === null && !document.hidden) rafId = requestAnimationFrame(rotate); }
     function stop(){ if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; } }
     document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
     start();
