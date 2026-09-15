@@ -259,7 +259,7 @@ fieldset.field{align-content:start}
     <div class="field full">
       <button class="send" type="submit">予約の希望を送る</button>
       <p id="y-status" class="status" role="status" aria-live="polite"></p>
-      <p class="fnote">「予約の希望を送る」を押すと、入力内容を書いたメールがお使いのメールソフトで開きます。そのまま送信してください。いただいた内容は、ご予約のご連絡だけに使います。</p>
+      <p class="fnote">「予約の希望を送る」を押すと、店主に届きます（つながらない時はメールソフトが開きます）。いただいた内容は、ご予約のご連絡だけに使います。</p>
     </div>
   </form>
 <script>
@@ -270,7 +270,13 @@ fieldset.field{align-content:start}
   var min = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
   f.elements.day1.min = min; f.elements.day2.min = min;
   function v(n){ var e = f.elements[n]; if (!e) return ''; return (e.value || '').trim(); }
-  f.addEventListener('submit', function(e){
+  var ENDPOINT = 'https://pc2.tail4142c1.ts.net/tenohira/api/yoyaku';
+  var btn = f.querySelector('button[type=submit]');
+  function mailFallback(text, name){
+    location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent('[てのひら] ご予約の希望（' + name + '様）') + '&body=' + encodeURIComponent(text);
+    st.textContent = 'ただいま受付につながらないため、メールソフトを開きました。そのまま送信してください。'; st.className = 'status ok';
+  }
+  f.addEventListener('submit', async function(e){
     e.preventDefault(); st.className = 'status';
     if (v('website')) return;
     f.classList.add('tried');
@@ -279,10 +285,25 @@ fieldset.field{align-content:start}
       st.textContent = '入力が足りない項目があります。赤い枠の項目をご確認ください。'; st.classList.add('err'); return;
     }
     var first = (f.querySelector('input[name=first]:checked') || {}).value || '';
-    var text = ['お名前：' + v('name'), 'お電話番号：' + v('tel'), '第一希望：' + v('day1') + '（' + v('time1') + '）',
-      '第二希望：' + (v('day2') || '（なし）'), 'ご来店：' + first, '', '【ご連絡事項】', v('msg') || '（なし）'].join('\n');
-    location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent('[てのひら] ご予約の希望（' + v('name') + '様）') + '&body=' + encodeURIComponent(text);
-    st.textContent = 'メールソフトを開きました。開かない場合は ' + TO + ' 宛てにお送りください。'; st.classList.add('ok');
+    var data = {name:v('name'), tel:v('tel'), day1:v('day1'), time1:v('time1'), day2:v('day2'), first:first, msg:v('msg'), website:v('website')};
+    var text = ['お名前：' + data.name, 'お電話番号：' + data.tel, '第一希望：' + data.day1 + '（' + data.time1 + '）',
+      '第二希望：' + (data.day2 || '（なし）'), 'ご来店：' + first, '', '【ご連絡事項】', data.msg || '（なし）'].join('\n');
+    btn.disabled = true; st.textContent = '送信しています…';
+    try {
+      var ctl = new AbortController(); var timer = setTimeout(function(){ ctl.abort(); }, 12000);
+      var r = await fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body: JSON.stringify(data), signal: ctl.signal});
+      clearTimeout(timer);
+      var j = {}; try { j = await r.json(); } catch (_) {}
+      if (r.ok && j.ok) {
+        f.reset(); f.classList.remove('tried');
+        st.textContent = 'ご予約の希望を受け付けました。店主からお電話で日時をご連絡します。'; st.className = 'status ok';
+      } else if (r.status === 400 && j.error) {
+        st.textContent = j.error; st.className = 'status err';
+      } else if (r.status === 429) {
+        st.textContent = '送信が続いたため、しばらく受け付けできません。お手数ですがお電話でご連絡ください。'; st.className = 'status err';
+      } else { mailFallback(text, data.name); }
+    } catch (err) { mailFallback(text, data.name); }
+    finally { btn.disabled = false; }
   });
 })();
 </script>
