@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ほぐし処 てのひら</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --ground:#F2F4EE; --paper:#FAFBF7; --ink:#1E2621; --muted:#5B685F;
+  --tea:#2E4636; --hoji:#A86B2D; --line:#D3DBD0; --glow:rgba(214,150,80,.28);
+  --display:"Klee One","Hiragino Mincho ProN","Yu Mincho",serif;
+  --body:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans CJK JP","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#131915; --paper:#1A221C; --ink:#E7ECE3; --muted:#A3B0A6;
+    --tea:#A9C4AE; --hoji:#DDA062; --line:#2F3A32; --glow:rgba(221,160,98,.16);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#131915; --paper:#1A221C; --ink:#E7ECE3; --muted:#A3B0A6;
+  --tea:#A9C4AE; --hoji:#DDA062; --line:#2F3A32; --glow:rgba(221,160,98,.16);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.9;letter-spacing:.02em;padding-inline:clamp(16px,5vw,64px)}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);font-weight:600;text-wrap:balance;margin:0}
+a{color:var(--tea)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--hoji);outline-offset:3px}
+.tbd{border-bottom:1px dashed var(--hoji);color:var(--muted)}
+
+/* 看板 */
+header.top{display:flex;justify-content:space-between;align-items:center;padding-block:22px;border-bottom:1px solid var(--line)}
+.mark{font-family:var(--display);font-size:20px;color:var(--tea)}
+.mark small{font-family:var(--body);font-size:12px;color:var(--muted);margin-left:.6em;letter-spacing:.12em}
+.top a.cta{font-size:14px;text-decoration:none;border:1px solid var(--tea);padding:6px 16px;border-radius:999px}
+
+/* 表紙：縦書きの一行と、手のぬくもりの灯り */
+.hero{position:relative;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;padding-block:72px 64px}
+.hero::before{content:"";position:absolute;right:4%;top:50%;width:min(460px,70vw);aspect-ratio:1;transform:translateY(-50%);
+  background:radial-gradient(circle,var(--glow) 0%,transparent 68%);border-radius:50%;z-index:0;animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{50%{transform:translateY(-50%) scale(1.07)}}
+@media (prefers-reduced-motion:reduce){.hero::before{animation:none}}
+.hero > *{position:relative;z-index:1}
+.lead p{max-width:30em;color:var(--muted);margin:22px 0 0}
+.lead .kicker{font-size:13px;letter-spacing:.24em;color:var(--hoji);margin:0 0 14px}
+.lead h2{font-size:clamp(26px,3.4vw,36px);line-height:1.5;color:var(--ink)}
+.tate{writing-mode:vertical-rl;font-family:var(--display);font-size:clamp(44px,6.4vw,76px);line-height:1.25;color:var(--tea);margin:0;letter-spacing:.08em;height:7.2em}
+.tate span{color:var(--hoji)}
+
+/* お品書き */
+section{padding-block:56px;border-top:1px solid var(--line)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px;margin-bottom:26px}
+.sec-head h2{white-space:nowrap}
+.sec-head h2{font-size:28px}
+.sec-head .en{font-size:12px;letter-spacing:.28em;color:var(--muted);text-transform:uppercase}
+.menu{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
+.price{background:var(--paper);border:1px solid var(--line);padding:32px 34px}
+.price .course{font-family:var(--display);font-size:22px;margin:0}
+.price .row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-top:18px;border-top:1px solid var(--line);padding-top:18px}
+.price .min{font-family:var(--display);font-size:64px;line-height:1;color:var(--tea);font-variant-numeric:tabular-nums}
+.price .min small{font-size:20px;margin-left:4px}
+.price .yen{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums}
+.price .yen small{font-size:15px;font-weight:500;margin-left:2px}
+.price ul{margin:18px 0 0;padding-left:1.1em;color:var(--muted);font-size:15px}
+.parts{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;padding:0;list-style:none}
+.parts li{border:1px solid var(--line);padding:4px 14px;border-radius:999px;font-size:14px;background:var(--paper)}
+.menu p{margin:0 0 14px;max-width:32em}
+
+/* 流れ（本当に順番があるので番号を振る） */
+.flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;list-style:none;padding:0;margin:0;counter-reset:f}
+.flow li{counter-increment:f;padding-top:18px;border-top:2px solid var(--tea)}
+.flow li::before{content:counter(f);font-family:var(--display);font-size:30px;color:var(--hoji);display:block;line-height:1.2}
+.flow h3{font-size:19px;margin:6px 0 6px}
+.flow p{margin:0;color:var(--muted);font-size:15px}
+
+/* はじめての方へ */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.check{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.check li{padding:10px 14px;background:var(--paper);border:1px solid var(--line);font-size:15px}
+.notice{border:1px solid var(--hoji);padding:22px 26px;font-size:15px}
+.notice h3{font-size:18px;color:var(--hoji);margin-bottom:8px}
+.notice p{margin:0 0 8px}
+
+/* ご予約 */
+dl.info{display:grid;grid-template-columns:8em 1fr;gap:12px 20px;margin:0;max-width:40em}
+dl.info dt{color:var(--muted);font-size:14px}
+dl.info dd{margin:0}
+footer{padding-block:34px 48px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+
+
+/* ご予約フォーム */
+.form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px 24px;margin-top:34px;background:var(--paper);border:1px solid var(--line);padding:30px 32px}
+.form .full{grid-column:1/-1}
+.field{display:grid;gap:6px}
+.field label,.field legend{font-size:14px;color:var(--ink)}
+.req,.opt{white-space:nowrap;display:inline-block;font-size:11px;margin-left:8px;padding:1px 8px;border-radius:999px;letter-spacing:.08em;vertical-align:1px}
+.req{background:var(--tea);color:var(--paper)}
+.opt{border:1px solid var(--line);color:var(--muted)}
+.form input,.form select,.form textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--ground);border:1px solid var(--line);border-radius:2px;padding:10px 12px;width:100%}
+.form textarea{resize:vertical;min-height:7em}
+.form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--hoji);box-shadow:0 0 0 3px var(--glow)}
+.form.tried :invalid{border-color:#B4432F}
+fieldset.field{border:0;padding:0;margin:0}
+.seg{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-start}
+fieldset.field{align-content:start}
+.seg label{display:flex;align-items:center;gap:8px;border:1px solid var(--line);padding:8px 16px;border-radius:999px;cursor:pointer;background:var(--ground)}
+.seg input{width:auto;accent-color:var(--tea)}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:14px}
+.agree input{width:auto;margin-top:6px;accent-color:var(--tea)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.send{font-family:var(--display);font-size:19px;letter-spacing:.12em;color:var(--paper);background:var(--tea);border:0;border-radius:999px;padding:12px 44px;cursor:pointer;justify-self:start}
+.send:hover{background:var(--hoji)}
+.status{margin:0;font-size:14px;min-height:1.4em}
+.status.ok{color:var(--tea)} .status.err{color:#B4432F}
+.fnote{margin:0;color:var(--muted);font-size:13px}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding-block:40px}
+  .tate{writing-mode:horizontal-tb;height:auto;font-size:40px;order:-1}
+  .menu,.two{grid-template-columns:1fr}
+  .flow{grid-template-columns:1fr}
+  .price .min{font-size:52px}
+  .lead h2{font-size:22px}
+  .lead h2 br{display:none}
+  .sec-head .en{display:none}
+  dl.info{grid-template-columns:1fr;gap:2px}
+  dl.info dd{margin-bottom:10px}
+  .top a.cta{display:none}
+  .form{grid-template-columns:1fr;padding:22px 18px}
+  .send{justify-self:stretch}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="mark">ほぐし処 てのひら<small>完全予約制</small></div>
+  <a class="cta" href="#yoyaku">ご予約について</a>
+</header>
+
+<div class="hero">
+  <div class="lead">
+    <p class="kicker">自宅の一室で、ひとりずつ</p>
+    <h2>あたたかい手で、ゆっくり、やさしく。<br>三十分だけの、くつろぎの時間です。</h2>
+    <p>店主の手は、ふれた人がまず驚くほどあたたかい手です。強く押さず、やさしくほぐす。一日にお迎えするのは二名さままで。急がない三十分をお過ごしください。</p>
+  </div>
+  <p class="tate" aria-hidden="true">手のひらの<br><span>ぬくもり</span>を</p>
+</div>
+
+<section id="menu" aria-labelledby="menu-h">
+  <div class="sec-head"><h2 id="menu-h">お品書き</h2><span class="en">Menu</span></div>
+  <div class="menu">
+    <div class="price">
+      <p class="course">てのひら もみほぐし</p>
+      <div class="row">
+        <span class="min">30<small>分</small></span>
+        <span class="yen">5,000<small>円（税込）</small></span>
+      </div>
+      <ul>
+        <li>コースはこの一つだけです</li>
+        <li>椅子に座ったまま、服を着たままお受けいただけます</li>
+      </ul>
+    </div>
+    <div>
+      <p>頭から手足の先まで、座ったままほぐせるところを、やさしく。力の強さは、そのつどお好みをうかがいます。</p>
+      <ul class="parts" aria-label="ほぐす場所">
+        <li>頭</li><li>首すじ</li><li>肩</li><li>腕</li><li>手のひら</li><li>足先</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="flow-h">
+  <div class="sec-head"><h2 id="flow-h">当日の流れ</h2><span class="en">Flow</span></div>
+  <ol class="flow">
+    <li><h3>ご予約</h3><p>お電話か、ご予約フォームでご希望の日時をお知らせください。当日のご来店はお受けしていません。</p></li>
+    <li><h3>体調のおうかがい</h3><p>はじめに、今日の体調とお薬のことを少しだけおうかがいします。</p></li>
+    <li><h3>三十分のもみほぐし</h3><p>椅子に座ったまま、やさしくほぐします。終わったら、ゆっくりお帰りください。</p></li>
+  </ol>
+</section>
+
+<section aria-labelledby="first-h">
+  <div class="sec-head"><h2 id="first-h">はじめての方へ</h2><span class="en">Before your visit</span></div>
+  <div class="two">
+    <div>
+      <p style="margin-top:0">次にあてはまる方は、おからだを大切にしていただくため、お受けできないことがあります。</p>
+      <ul class="check">
+        <li>病院で治療中で、医師から許可が出ていない方</li>
+        <li>血をサラサラにするお薬を飲んでいる方</li>
+        <li>骨粗しょう症・がんの治療中の方</li>
+        <li>妊娠中の方</li>
+        <li>熱がある方、けがや腫れのある方</li>
+        <li>お酒を飲まれた方</li>
+      </ul>
+    </div>
+    <div class="notice" role="note">
+      <h3>大切なお知らせ</h3>
+      <p>当店は、くつろぎを目的としたもみほぐしのお店です。医療機関ではなく、治療は行いません。</p>
+      <p>店主は、あん摩マッサージ指圧師などの国家資格を持っていません。</p>
+      <p>おからだの不調が続くときは、医療機関にご相談ください。</p>
+    </div>
+  </div>
+</section>
+
+<section id="yoyaku" aria-labelledby="yoyaku-h">
+  <div class="sec-head"><h2 id="yoyaku-h">ご予約について</h2><span class="en">Reservation</span></div>
+  <dl class="info">
+    <dt>ご予約</dt><dd>お電話、または下のフォームから　<span class="tbd">電話番号（未定）</span></dd>
+    <dt>営業日</dt><dd>週三日　<span class="tbd">曜日（未定）</span></dd>
+    <dt>受付時間</dt><dd><span class="tbd">時間（未定）</span></dd>
+    <dt>一日の定員</dt><dd>二名さままで</dd>
+    <dt>場所</dt><dd>福岡県　<span class="tbd">住所（ご予約時にお知らせ・未定）</span></dd>
+    <dt>お支払い</dt><dd><span class="tbd">現金のみ など（未定）</span></dd>
+  </dl>
+
+  <form id="yoyaku-form" class="form" novalidate aria-labelledby="yf-h">
+    <h3 id="yf-h" class="full" style="font-size:22px">ご予約フォーム</h3>
+    <p class="fnote full">ご希望をお送りください。店主からお電話で日時を確定いたします。送信だけでは予約は確定しません。</p>
+    <div class="field">
+      <label for="y-name">お名前<span class="req">必須</span></label>
+      <input id="y-name" name="name" autocomplete="name" required maxlength="40">
+    </div>
+    <div class="field">
+      <label for="y-tel">お電話番号<span class="req">必須</span></label>
+      <input id="y-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required pattern="[0-9+\-() ]{10,20}" maxlength="20" placeholder="例：090-1234-5678">
+    </div>
+    <div class="field">
+      <label for="y-day1">第一希望の日<span class="req">必須</span></label>
+      <input id="y-day1" name="day1" type="date" required>
+    </div>
+    <div class="field">
+      <label for="y-time1">時間帯<span class="req">必須</span></label>
+      <select id="y-time1" name="time1" required>
+        <option value="">選んでください</option><option>午前</option><option>お昼すぎ</option><option>夕方</option><option>いつでもよい</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="y-day2">第二希望の日<span class="opt">任意</span></label>
+      <input id="y-day2" name="day2" type="date">
+    </div>
+    <fieldset class="field">
+      <legend>ご来店は<span class="req">必須</span></legend>
+      <div class="seg">
+        <label><input type="radio" id="y-first-yes" name="first" value="はじめて" required>はじめて</label>
+        <label><input type="radio" id="y-first-no" name="first" value="2回目以降">2回目以降</label>
+      </div>
+    </fieldset>
+    <div class="field full">
+      <label for="y-msg">ご連絡事項<span class="opt">任意</span></label>
+      <textarea id="y-msg" name="msg" maxlength="500" placeholder="お電話がつながりやすい時間など。体調やお薬のことは、当日おうかがいします。"></textarea>
+    </div>
+    <div class="hp" aria-hidden="true"><label>空欄のままにしてください<input name="website" tabindex="-1" autocomplete="off"></label></div>
+    <label class="agree full"><input id="y-agree" type="checkbox" required><span>「はじめての方へ」と「大切なお知らせ」を読み、くつろぎを目的としたもみほぐし（治療ではない）であることを了承しました<span class="req">必須</span></span></label>
+    <div class="field full">
+      <button class="send" type="submit">予約の希望を送る</button>
+      <p id="y-status" class="status" role="status" aria-live="polite"></p>
+      <p class="fnote">「予約の希望を送る」を押すと、入力内容を書いたメールがお使いのメールソフトで開きます。そのまま送信してください。いただいた内容は、ご予約のご連絡だけに使います。</p>
+    </div>
+  </form>
+<script>
+(function(){
+  var TO = 'mymikiyuuzi@pm.me';
+  var f = document.getElementById('yoyaku-form'), st = document.getElementById('y-status');
+  var d = new Date(); d.setDate(d.getDate() + 1);
+  var min = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  f.elements.day1.min = min; f.elements.day2.min = min;
+  function v(n){ var e = f.elements[n]; if (!e) return ''; return (e.value || '').trim(); }
+  f.addEventListener('submit', function(e){
+    e.preventDefault(); st.className = 'status';
+    if (v('website')) return;
+    f.classList.add('tried');
+    if (!f.checkValidity()) {
+      var bad = f.querySelector(':invalid'); if (bad) bad.focus();
+      st.textContent = '入力が足りない項目があります。赤い枠の項目をご確認ください。'; st.classList.add('err'); return;
+    }
+    var first = (f.querySelector('input[name=first]:checked') || {}).value || '';
+    var text = ['お名前：' + v('name'), 'お電話番号：' + v('tel'), '第一希望：' + v('day1') + '（' + v('time1') + '）',
+      '第二希望：' + (v('day2') || '（なし）'), 'ご来店：' + first, '', '【ご連絡事項】', v('msg') || '（なし）'].join('\n');
+    location.href = 'mailto:' + TO + '?subject=' + encodeURIComponent('[てのひら] ご予約の希望（' + v('name') + '様）') + '&body=' + encodeURIComponent(text);
+    st.textContent = 'メールソフトを開きました。開かない場合は ' + TO + ' 宛てにお送りください。'; st.classList.add('ok');
+  });
+})();
+</script>
+</section>
+
+<footer>
+  <p>ほぐし処 てのひら ／ くつろぎを目的としたもみほぐし（医療行為ではありません）</p>
+  <p>点線の部分は準備中です。</p>
+</footer>
+
+</div>
+</body></html>
