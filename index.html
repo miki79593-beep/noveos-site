@@ -59,8 +59,20 @@
     <div class="price">2,100,000円<span class="note">（税込）</span></div>
     <p>【要確認】作業範囲（対象台数・期間・サポート有無）はここに記載します。</p>
     <p class="note">お支払い方法：クレジットカード（Stripe）または銀行振込。<br>性能改善の幅は機器と環境によって異なり、改善余地が見つからない場合もあります。事前のご相談で改善の見込みが低いと判断した場合は、ご契約をお勧めしません。</p>
+    <p id="pay-wrap" hidden><a id="pay-btn" class="btn" href="#" rel="noopener">カードでお支払い（Stripe）</a></p>
   </div>
 </div></section>
+<script>
+(function(){
+  // Stripe の支払いリンク。空のあいだはボタンを出さない。
+  // 本番の審査(charges_enabled)が通ってから live の URL を入れること。test_ の URL は入れない。
+  var STRIPE_PAYMENT_LINK = '';
+  if (!/^https:\/\/buy\.stripe\.com\/(?!test_)/.test(STRIPE_PAYMENT_LINK)) return;
+  var w = document.getElementById('pay-wrap'), b = document.getElementById('pay-btn');
+  if (!w || !b) return;
+  b.href = STRIPE_PAYMENT_LINK; w.hidden = false;
+})();
+</script>
 
 <section id="company"><div class="wrap">
   <h2>事業者情報</h2>
