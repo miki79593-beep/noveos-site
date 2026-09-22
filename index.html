@@ -66,7 +66,7 @@
 (function(){
   // Stripe の支払いリンク。空のあいだはボタンを出さない。
   // 本番の審査(charges_enabled)が通ってから live の URL を入れること。test_ の URL は入れない。
-  var STRIPE_PAYMENT_LINK = '';
+  var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/bJeaEYebP8tu55d6JfdMI02';
   if (!/^https:\/\/buy\.stripe\.com\/(?!test_)/.test(STRIPE_PAYMENT_LINK)) return;
   var w = document.getElementById('pay-wrap'), b = document.getElementById('pay-btn');
   if (!w || !b) return;
