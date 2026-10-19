@@ -12,7 +12,7 @@
   <a class="brand" href="/">NOVE<span>∞</span></a>
   <button class="menu-btn" type="button" aria-label="メニュー" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
 </div>
-<nav id="menu" hidden><a href="#service">サービス</a><a href="#flow">進め方</a><a href="#price">料金</a><a href="#contact">お問い合わせ</a></nav>
+<nav id="menu" hidden><a href="#contact">お問い合わせ</a></nav>
 </header>
 <script>
 (function(){
@@ -33,47 +33,6 @@
 </div>
 
 <main>
-<section id="service"><div class="wrap">
-  <h2>サービス内容</h2>
-  <p>お客様の Linux サーバー・PC を実測で点検し、性能を落としている原因を特定して改善します。改善の前後を同じ条件で測り、その数値をレポートでお渡しします。</p>
-  <div class="grid">
-    <div class="card"><h3>実測による点検</h3><p>CPU周波数・温度・メモリ・ディスク・ネットワークを標準的な計測ツールで測り、設定ミスや詰まりを特定します。</p></div>
-    <div class="card"><h3>標準ツールを優先</h3><p>既存の実績あるオープンソース（tuned・earlyoom など）で解決できるものは、それを使って設定します。独自ツールの押し売りはしません。</p></div>
-    <div class="card"><h3>前後比較レポート</h3><p>同じ機械・同じ条件で複数回測定し、改善率を % で記載します。改善しなかった項目は 0% とそのまま記載します。</p></div>
-  </div>
-</div></section>
-
-<section id="flow"><div class="wrap">
-  <h2>進め方</h2>
-  <div class="tbl"><table class="info">
-    <tr><th>1. ご相談</th><td>メールで対象機器の台数・用途・お困りの症状をお知らせください。</td></tr>
-    <tr><th>2. お見積り・ご契約</th><td>作業範囲と納期を書面でご提示し、ご同意いただいてから着手します。</td></tr>
-    <tr><th>3. 計測・改善</th><td>改善前の計測 → 原因の特定 → 設定変更 → 改善後の計測を行います。</td></tr>
-    <tr><th>4. 報告</th><td>前後の数値・変更内容・元に戻す手順をまとめたレポートを納品します。</td></tr>
-  </table></div>
-</div></section>
-
-<section id="price"><div class="wrap">
-  <h2>料金</h2>
-  <div class="card">
-    <div class="price">2,100,000円<span class="note">（税込）</span></div>
-    <p>【要確認】作業範囲（対象台数・期間・サポート有無）はここに記載します。</p>
-    <p class="note">お支払い方法：クレジットカード（Stripe）または銀行振込。<br>性能改善の幅は機器と環境によって異なり、改善余地が見つからない場合もあります。事前のご相談で改善の見込みが低いと判断した場合は、ご契約をお勧めしません。</p>
-    <p id="pay-wrap" hidden><a id="pay-btn" class="btn" href="#" rel="noopener">カードでお支払い（Stripe）</a></p>
-  </div>
-</div></section>
-<script>
-(function(){
-  // Stripe の支払いリンク。空のあいだはボタンを出さない。
-  // 本番の審査(charges_enabled)が通ってから live の URL を入れること。test_ の URL は入れない。
-  var STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/bJeaEYebP8tu55d6JfdMI02';
-  if (!/^https:\/\/buy\.stripe\.com\/(?!test_)/.test(STRIPE_PAYMENT_LINK)) return;
-  var w = document.getElementById('pay-wrap'), b = document.getElementById('pay-btn');
-  if (!w || !b) return;
-  b.href = STRIPE_PAYMENT_LINK; w.hidden = false;
-})();
-</script>
-
 <section id="contact"><div class="wrap">
   <h2>お問い合わせ</h2>
   <p>ご相談・お見積りのご依頼は、以下のフォームからお送りください。<span class="req">必須</span>の項目は入力が必要です。</p>
